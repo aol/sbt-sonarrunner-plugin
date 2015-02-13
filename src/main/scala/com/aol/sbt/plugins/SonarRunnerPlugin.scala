@@ -14,8 +14,10 @@ object SonarRunnerPlugin extends AutoPlugin {
   override def trigger = allRequirements
 
   override def projectSettings: Seq[Setting[_]] = Seq(
-    sonarRunner
+    sonarRunner,
+    sonarProperties := Map()
   )
+
 
   val sonarRunner = TaskKey[Unit]("sonar", "Generate configuration and start SonarRunner") := {
     def filePathsToString(files: Seq[File]) = files.filter(_.exists).map(_.getAbsolutePath).toSet.mkString(",")
@@ -33,14 +35,16 @@ object SonarRunnerPlugin extends AutoPlugin {
       "sonar.jdbc.username" -> "sonar",
       "sonar.jdbc.password" -> "")
 
-    val propertiesAsString = defaults.toSeq.map { case (k, v) => "%s=%s".format(k, v)}.mkString("\n")
+    val properties = defaults ++ sonarProperties.value
+
+    val propertiesAsString = properties.toSeq.map { case (k, v) => "%s=%s".format(k, v)}.mkString("\n")
 
     val propertiesFile = file(target.value + "/sonar-project.properties")
     IO.write(propertiesFile, propertiesAsString)
     println("**********************************")
     println("Publishing reports to SonarQube...")
     println("**********************************")
-    //Main.main(Array[String]("-D", "project.settings=" + propertiesFile.getCanonicalPath))
+    org.sonar.runner.Main.main(Array[String]("-D", "project.settings=" + propertiesFile.getCanonicalPath))
   }
 
 }
