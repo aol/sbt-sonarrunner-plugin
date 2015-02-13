@@ -6,6 +6,7 @@
 .history/
 .lib/
 dist/*
+.idea/
 target/
 lib_managed/
 src_managed/
