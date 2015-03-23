@@ -1,6 +1,6 @@
 version := "1.2.3"
 
-name := "test-project"
+name := "sonar-runner-sbt-plugin-test-project"
 
 organization := "aol"
 

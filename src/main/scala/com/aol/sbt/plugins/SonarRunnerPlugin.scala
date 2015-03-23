@@ -1,5 +1,8 @@
 package com.aol.sbt.plugins
 
+import java.io.File
+
+import org.sonar.runner.Main
 import sbt.Keys._
 import sbt._
 
@@ -30,21 +33,21 @@ object SonarRunnerPlugin extends AutoPlugin {
       "sonar.sources" -> filePathsToString((unmanagedSourceDirectories in Compile).value),
       "sonar.tests" -> filePathsToString((unmanagedSourceDirectories in Test).value),
       "sonar.host.url" -> "http://localhost:9000",
-      "sonar.jdbc.url" -> "jdbc:mysql://localhost:3306/sonar",
-      "sonar.java.source" -> "6",
       "sonar.jdbc.username" -> "sonar",
-      "sonar.jdbc.password" -> "")
-
-    val properties = defaults ++ sonarProperties.value
-
-    val propertiesAsString = properties.toSeq.map { case (k, v) => "%s=%s".format(k, v)}.mkString("\n")
-
+      "sonar.projectBaseDir" -> file(".").absolutePath,
+      "sonar.exclusions" -> "",
+      "sonar.java.source" -> "8",
+      "sonar.java.target" -> "8",
+      "sonar.language" -> "java",
+      "sonar.jdbc.url" -> "jdbc:mysql://localhost:3306/sonar",
+      "sonar.jdbc.password" -> "sonar")
+    val propertiesAsString = (defaults ++ sonarProperties.value).toSeq.map { case (k, v) => "%s=%s".format(k, v) }.mkString("\n")
     val propertiesFile = file(target.value + "/sonar-project.properties")
+
     IO.write(propertiesFile, propertiesAsString)
     println("**********************************")
     println("Publishing reports to SonarQube...")
     println("**********************************")
-    org.sonar.runner.Main.main(Array[String]("-D", "project.settings=" + propertiesFile.getCanonicalPath))
+    Main.main(Array[String]("-D", "project.settings=" + propertiesFile.getCanonicalPath, "-D", "project.home=" + file(".").absolutePath))
   }
-
 }
