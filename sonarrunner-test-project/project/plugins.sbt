@@ -1,3 +1,7 @@
-lazy val root = Project("plugins", file(".")).dependsOn(plugin)
-
-lazy val plugin = file("../").getCanonicalFile.toURI
+{
+  val pluginVersion = System.getProperty("plugin.version")
+  if (pluginVersion == null)
+    throw new RuntimeException( """|The system property 'plugin.version' is not defined.
+                                  |Specify this property using the scriptedLaunchOpts -D.""".stripMargin)
+  else addSbtPlugin("com.aol.sbt" % "sonar" % "0.0.5-SNAPSHOT")
+}

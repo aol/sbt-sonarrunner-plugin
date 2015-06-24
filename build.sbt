@@ -1,35 +1,39 @@
-import bintray.Keys._
-
 sbtPlugin := true
 
 name := "sonarrunner-sbt-plugin"
 
-organization := "com.aol"
+organization := "com.aol.sbt"
+
+scalacOptions ++= List(
+  "-unchecked",
+  "-deprecation",
+  "-Xlint",
+  "-encoding", "UTF-8"
+)
+
+javaVersionPrefix in javaVersionCheck := Some("1.6")
+
+addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.0.1" % "provided")
+
+ScriptedPlugin.scriptedSettings
+
+scriptedLaunchOpts := {
+  scriptedLaunchOpts.value ++
+    Seq("-Xmx1024M", "-XX:MaxPermSize=256M", "-Dplugin.version=" + version.value)
+}
+
+scriptedBufferLog := false
 
 libraryDependencies += "org.codehaus.sonar.runner" % "sonar-runner-dist" % "2.4"
 
-scalaVersion := "2.10.3"
+version := "git describe --tags --dirty --always".!!.stripPrefix("v").trim
 
 publishMavenStyle := false
 
-bintrayPublishSettings
+bintrayOrganization := Some("aol")
 
-repository in bintray := "sbt-plugins"
+bintrayPackageLabels := Seq("sbt", "sonar", "sbt-native-packager")
+
+bintrayRepository := "scala"
 
 licenses +=("MIT", url("http://opensource.org/licenses/MIT"))
-
-bintrayOrganization in bintray := None
-
-crossScalaVersions := Seq("2.10.3", "2.11.1")
-
-releaseSettings
-
-publishTo := {
-  val nexus = "http://cmmaven.cm.aol.com:8081/nexus/content/repositories/"
-  if (isSnapshot.value)
-    Some("snapshots" at nexus + "aolcom-snaps")
-  else
-    Some("releases" at nexus + "aolcom")
-}
-
-credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
