@@ -1,6 +1,6 @@
 sbtPlugin := true
 
-name := "sonarrunner-sbt-plugin"
+name := "sbt-sonarrunner-plugin"
 
 organization := "com.aol.sbt"
 
