@@ -3,5 +3,5 @@
   if (pluginVersion == null)
     throw new RuntimeException( """|The system property 'plugin.version' is not defined.
                                   |Specify this property using the scriptedLaunchOpts -D.""".stripMargin)
-  else addSbtPlugin("com.aol.sbt" % "sonar" % "0.0.5-SNAPSHOT")
+  else addSbtPlugin("com.aol.sbt" % "sonar" % pluginVersion)
 }
