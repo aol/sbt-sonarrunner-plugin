@@ -1,0 +1,12 @@
+language: scala
+os:
+  - linux
+script:
+  - sbt ++$TRAVIS_SCALA_VERSION scripted
+scala:
+  - 2.10.4
+jdk:
+  - openjdk6
+notifications:
+  email:
+    - pawel.raszewski@teamaol.com
