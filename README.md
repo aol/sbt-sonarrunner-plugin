@@ -1,6 +1,11 @@
 # sbt-sonarrunner-plugin
 An SBT plugin to publish code quality data to SonarQube
 
+Build status
+------------
+
+![Build health](https://travis-ci.org/aol/sbt-sonarrunner-plugin.svg)
+
 
 Installation
 ------------
