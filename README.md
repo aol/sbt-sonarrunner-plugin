@@ -36,7 +36,7 @@ sonarProperties ++= Map(
       "sonar.host.url" -> "http://sonarhostname.com",
       "sonar.jdbc.username" -> "sonar",
       "sonar.jdbc.password" -> "sonar",
-      "sonar.coverage.exclusions" -> "**/MobileAppController.java,**/LegacyArticleController.java"
+      "sonar.coverage.exclusions" -> "**/MobileAppController.java,**/SomeClass.java"
     )
 ```
 
