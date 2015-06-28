@@ -19,6 +19,13 @@ Add the following to your `project/plugins.sbt` file:
 addSbtPlugin("com.aol.sbt" % "sbt-sonarrunner-plugin" % "1.0.0")
 ```
 
+To use the SonarRunner settings in your project, add the `SonarRunnerPlugin` auto-plugin to your project.
+
+```scala
+enablePlugins(SonarRunnerPlugin)
+```
+
+
 Configuration
 -------------
 
