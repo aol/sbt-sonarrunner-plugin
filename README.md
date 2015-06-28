@@ -10,6 +10,9 @@ Build status
 Installation
 ------------
 
+NOTE this plugin targets sbt 0.13.6+
+=================
+
 Add the following to your `project/plugins.sbt` file:
 
 ```scala

@@ -16,15 +16,6 @@ object SonarRunnerPlugin extends AutoPlugin {
 
   import com.aol.sbt.sonar.SonarRunnerPlugin.autoImport._
 
-  override def trigger = allRequirements
-
-  def runSonarAgent(configFile: File) = {
-    println("**********************************")
-    println("Publishing reports to SonarQube...")
-    println("**********************************")
-    Main.main(Array[String]("-D", "project.settings=" + configFile.getCanonicalPath, "-D", "project.home=" + file(".").absolutePath))
-  }
-
   override def projectSettings: Seq[Setting[_]] = Seq(
     generateSonarConfiguration := makeConfiguration(target.value + "/sonar-project.properties", sonarProperties.value),
     sonarProperties := Seq(
@@ -32,21 +23,27 @@ object SonarRunnerPlugin extends AutoPlugin {
       "sonar.projectVersion" -> version.value,
       "sonar.projectKey" -> "%s:%s".format(organization.value, name.value),
       "sonar.binaries" -> filePathsToString(Seq((classDirectory in Compile).value)),
-      "sonar.sourceEncoding" -> "UTF-8",
       "sonar.sources" -> filePathsToString((unmanagedSourceDirectories in Compile).value),
       "sonar.tests" -> filePathsToString((unmanagedSourceDirectories in Test).value),
-      "sonar.host.url" -> "http://localhost:9000",
-      "sonar.jdbc.username" -> "sonar",
       "sonar.projectBaseDir" -> file(".").absolutePath,
-      "sonar.exclusions" -> "",
-      "sonar.java.source" -> "8",
-      "sonar.java.target" -> "8",
-      "sonar.language" -> "java",
+      "sonar.sourceEncoding" -> "UTF-8",
+      "sonar.host.url" -> "http://localhost:9000",
       "sonar.jdbc.url" -> "jdbc:mysql://localhost:3306/sonar",
+      "sonar.jdbc.username" -> "sonar",
       "sonar.jdbc.password" -> "sonar"
     ),
-    sonar := runSonarAgent(generateSonarConfiguration.value)
+    sonar := {
+      lazy val logger: TaskStreams = streams.value
+      runSonarAgent(generateSonarConfiguration.value, logger)
+    }
   )
+
+  def runSonarAgent(configFile: File, logger: TaskStreams) = {
+    logger.log.info("**********************************")
+    logger.log.info("Publishing reports to SonarQube...")
+    logger.log.info("**********************************")
+    Main.main(Array[String]("-D", "project.settings=" + configFile.getCanonicalPath, "-D", "project.home=" + file(".").absolutePath))
+  }
 
   private[this] def filePathsToString(files: Seq[File]) = files.filter(_.exists).map(_.getAbsolutePath).toSet.mkString(",")
 
