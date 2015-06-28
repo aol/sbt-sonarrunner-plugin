@@ -9,7 +9,7 @@ import sbt._
 object SonarRunnerPlugin extends AutoPlugin {
 
   object autoImport {
-    val sonarProperties = settingKey[Seq[(String, String)]]("SonarRunner configuration properties. See http://docs.codehaus.org/display/SONAR/Analysis+Parameters.")
+    val sonarProperties = settingKey[Map[String, String]]("SonarRunner configuration properties. See http://docs.codehaus.org/display/SONAR/Analysis+Parameters.")
     val sonar = taskKey[Unit]("Runs Sonar agent")
     val generateSonarConfiguration = taskKey[File]("Generates Sonar configuration")
   }
@@ -18,7 +18,7 @@ object SonarRunnerPlugin extends AutoPlugin {
 
   override def projectSettings: Seq[Setting[_]] = Seq(
     generateSonarConfiguration := makeConfiguration(target.value + "/sonar-project.properties", sonarProperties.value),
-    sonarProperties := Seq(
+    sonarProperties := Map(
       "sonar.projectName" -> name.value,
       "sonar.projectVersion" -> version.value,
       "sonar.projectKey" -> "%s:%s".format(organization.value, name.value),
@@ -47,7 +47,7 @@ object SonarRunnerPlugin extends AutoPlugin {
 
   private[this] def filePathsToString(files: Seq[File]) = files.filter(_.exists).map(_.getAbsolutePath).toSet.mkString(",")
 
-  private[this] def makeConfiguration(configPath: String, props: Seq[(String, String)]): File = {
+  private[this] def makeConfiguration(configPath: String, props: Map[String, String]): File = {
     val propertiesAsString = (props).toSeq.map { case (k, v) => "%s=%s".format(k, v)}.mkString("\n")
     val propertiesFile = file(configPath)
     IO.write(propertiesFile, propertiesAsString)

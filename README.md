@@ -16,7 +16,7 @@ NOTE this plugin targets sbt 0.13.6+
 Add the following to your `project/plugins.sbt` file:
 
 ```scala
-addSbtPlugin("com.aol.sbt" % "sbt-sonarrunner-plugin" % "1.0.1")
+addSbtPlugin("com.aol.sbt" % "sbt-sonarrunner-plugin" % "1.0.2")
 ```
 
 To use the SonarRunner settings in your project, add the `SonarRunnerPlugin` auto-plugin to your project.
@@ -32,12 +32,16 @@ Configuration
 To use specific Sonar settings, add the following to your `build.sbt` file:
 
 ```scala
-sonarProperties := Seq(
+sonarProperties ++= Map(
       "sonar.host.url" -> "http://sonarhostname.com",
       "sonar.jdbc.username" -> "sonar",
       "sonar.jdbc.password" -> "sonar",
       "sonar.coverage.exclusions" -> "**/MobileAppController.java,**/LegacyArticleController.java"
     )
+```
+
+```scala
+    sbt sonar
 ```
 
 Full list of Sonar analysis parameters
