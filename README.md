@@ -16,7 +16,7 @@ NOTE this plugin targets sbt 0.13.6+
 Add the following to your `project/plugins.sbt` file:
 
 ```scala
-addSbtPlugin("com.aol.sbt" % "sbt-sonarrunner-plugin" % "1.0.2")
+addSbtPlugin("com.aol.sbt" % "sbt-sonarrunner-plugin" % "1.0.3")
 ```
 
 To use the SonarRunner settings in your project, add the `SonarRunnerPlugin` auto-plugin to your project.
@@ -64,3 +64,7 @@ Run Sonar
 Full list of Sonar analysis parameters
 --------------------------------------
 http://docs.sonarqube.org/display/SONAR/Analysis+Parameters
+
+Bintray
+--------------------------------------
+https://bintray.com/aol/scala/sbt-sonarrunner-plugin/view
