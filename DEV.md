@@ -11,3 +11,6 @@ tag
 
     `sbt clean publish`
 
+release
+
+    `sbt release`
