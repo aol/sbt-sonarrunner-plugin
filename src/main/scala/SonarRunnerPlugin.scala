@@ -12,6 +12,7 @@ object SonarRunnerPlugin extends AutoPlugin {
     val sonarProperties = settingKey[Map[String, String]]("SonarRunner configuration properties. See http://docs.codehaus.org/display/SONAR/Analysis+Parameters.")
     val sonar = taskKey[Unit]("Runs Sonar agent")
     val generateSonarConfiguration = taskKey[File]("Generates Sonar configuration")
+    val sonarRunnerOptions = settingKey[String]("Extra options for sonar runner")
   }
 
   import com.aol.sbt.sonar.SonarRunnerPlugin.autoImport._
@@ -32,17 +33,18 @@ object SonarRunnerPlugin extends AutoPlugin {
       "sonar.jdbc.username" -> "sonar",
       "sonar.jdbc.password" -> "sonar"
     ),
+    sonarRunnerOptions := "",
     sonar := {
       lazy val logger: TaskStreams = streams.value
-      runSonarAgent(generateSonarConfiguration.value, logger)
+      runSonarAgent(generateSonarConfiguration.value, logger, sonarRunnerOptions.value)
     }
   )
 
-  def runSonarAgent(configFile: File, logger: TaskStreams) = {
+  def runSonarAgent(configFile: File, logger: TaskStreams, sonarRunnerOptions: String) = {
     logger.log.info("**********************************")
     logger.log.info("Publishing reports to SonarQube...")
     logger.log.info("**********************************")
-    Main.main(Array[String]("-D", "project.settings=" + configFile.getCanonicalPath, "-D", "project.home=" + file(".").absolutePath))
+    Main.main(Array[String]("-D", "project.settings=" + configFile.getCanonicalPath, "-D", "project.home=" + file(".").absolutePath, sonarRunnerOptions))
   }
 
   private[this] def filePathsToString(files: Seq[File]) = files.filter(_.exists).map(_.getAbsolutePath).toSet.mkString(",")
