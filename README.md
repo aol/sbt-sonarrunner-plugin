@@ -40,7 +40,24 @@ sonarProperties ++= Map(
     )
 ```
 
+
+You can also specify the following sonar-runner options:
+```
+-D,--define <arg>     Define property
+-e,--errors           Produce execution error messages
+-h,--help             Display help information
+-v,--version          Display version information
+-X,--debug            Produce execution debug output
+```
+
 ```scala
+sonarRunnerOptions := Seq("-e", "-X")
+
+```
+
+Run Sonar
+
+```bash
     sbt sonar
 ```
 

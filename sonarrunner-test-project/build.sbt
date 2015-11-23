@@ -6,7 +6,8 @@ organization := "aol"
 
 val root = (project in file("."))
   .enablePlugins(SonarRunnerPlugin).settings(
-    sonarProperties := Seq(
+    sonarRunnerOptions := Seq("-v"),
+    sonarProperties := Map(
       "sonar.host.url" -> "http://testurl.com",
       "sonar.jdbc.username" -> "sonar",
       "sonar.coverage.exclusions" -> "**/MobileAppController.java,**/LegacyArticleController.java"
