@@ -68,3 +68,7 @@ http://docs.sonarqube.org/display/SONAR/Analysis+Parameters
 Bintray
 --------------------------------------
 https://bintray.com/aol/scala/sbt-sonarrunner-plugin/view
+
+Author
+--------------------------------------
+maestr0 - Pawel Raszewski
