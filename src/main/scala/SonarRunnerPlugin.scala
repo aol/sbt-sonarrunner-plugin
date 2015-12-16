@@ -1,10 +1,14 @@
 package com.aol.sbt.sonar
 
-import java.io.File
+import java.io.{File, FileOutputStream}
+import java.util.Properties
 
 import org.sonar.runner.Main
 import sbt.Keys._
 import sbt._
+
+import scala.collection.JavaConversions
+;
 
 object SonarRunnerPlugin extends AutoPlugin {
 
@@ -50,9 +54,9 @@ object SonarRunnerPlugin extends AutoPlugin {
   private[this] def filePathsToString(files: Seq[File]) = files.filter(_.exists).map(_.getAbsolutePath).toSet.mkString(",")
 
   private[this] def makeConfiguration(configPath: String, props: Map[String, String]): File = {
-    val propertiesAsString = (props).toSeq.map { case (k, v) => "%s=%s".format(k, v)}.mkString("\n")
-    val propertiesFile = file(configPath)
-    IO.write(propertiesFile, propertiesAsString)
-    propertiesFile
+    val p = new Properties()
+    p.putAll(JavaConversions.mapAsJavaMap(props))
+    p.store(new FileOutputStream(configPath), null)
+    file(configPath)
   }
 }

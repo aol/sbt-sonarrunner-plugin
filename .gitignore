@@ -1,3 +1,4 @@
+/sonarrunner-test-project/target
 *.class
 *.log
 

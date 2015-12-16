@@ -37,3 +37,10 @@ bintrayPackageLabels := Seq("sbt", "sonar", "sbt-native-packager")
 bintrayRepository := "scala"
 
 licenses +=("MIT", url("http://opensource.org/licenses/MIT"))
+
+resourceGenerators in Compile <+= (resourceManaged in Compile, name, version) map { (dir, n, v) =>
+  val file = dir / "latest-version.properties"
+  val contents = "name=%s\nversion=%s".format(n, v)
+  IO.write(file, contents)
+  Seq(file)
+}

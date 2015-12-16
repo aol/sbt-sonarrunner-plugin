@@ -1,5 +1,5 @@
 publish local
-
+    `setJdk6`
     `sbt publishLocal`
 
 test
