@@ -16,7 +16,7 @@ NOTE this plugin targets sbt 0.13.6+
 Add the following to your `project/plugins.sbt` file:
 
 ```scala
-addSbtPlugin("com.aol.sbt" % "sbt-sonarrunner-plugin" % "1.0.3")
+addSbtPlugin("com.aol.sbt" % "sbt-sonarrunner-plugin" % "1.0.4")
 ```
 
 To use the SonarRunner settings in your project, add the `SonarRunnerPlugin` auto-plugin to your project.
