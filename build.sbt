@@ -11,11 +11,7 @@ scalacOptions ++= List(
   "-encoding", "UTF-8"
 )
 
-javaVersionPrefix in javaVersionCheck := Some("1.6")
-
-addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.0.1" % "provided")
-
-ScriptedPlugin.scriptedSettings
+addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.3.3" % "provided")
 
 scriptedLaunchOpts := {
   scriptedLaunchOpts.value ++
@@ -26,6 +22,7 @@ scriptedBufferLog := false
 
 libraryDependencies += "org.codehaus.sonar.runner" % "sonar-runner-dist" % "2.4"
 
+import scala.sys.process._
 version := "git describe --tags --dirty --always".!!.stripPrefix("v").trim
 
 publishMavenStyle := false
@@ -38,9 +35,9 @@ bintrayRepository := "scala"
 
 licenses +=("MIT", url("http://opensource.org/licenses/MIT"))
 
-resourceGenerators in Compile <+= (resourceManaged in Compile, name, version) map { (dir, n, v) =>
+resourceGenerators in Compile += resourceManaged in Compile map { dir =>
   val file = dir / "latest-version.properties"
-  val contents = "name=%s\nversion=%s".format(n, v)
+  val contents = "name=%s\nversion=%s".format(name, version)
   IO.write(file, contents)
   Seq(file)
 }
