@@ -1,5 +1,3 @@
-libraryDependencies += "org.scala-sbt" % "scripted-plugin" % sbtVersion.value
+libraryDependencies += "org.scala-sbt" % "scripted-plugin_2.12" % sbtVersion.value
 
-addSbtPlugin("com.typesafe.sbt" % "sbt-javaversioncheck" % "0.1.0")
-
-addSbtPlugin("me.lessis" % "bintray-sbt" % "0.3.0")
+addSbtPlugin("org.foundweekends" % "sbt-bintray" % "0.5.3")
