@@ -10,7 +10,7 @@ Build status
 Installation
 ------------
 
-NOTE this plugin targets sbt 0.13.6+
+NOTE this plugin targets sbt 1.1.0+
 =================
 
 Add the following to your `project/plugins.sbt` file:
