@@ -1,22 +1,19 @@
 # sbt-sonarrunner-plugin
+
 An SBT plugin to publish code quality data to SonarQube
 
-Build status
-------------
+## Build status
 
 ![Build health](https://travis-ci.org/aol/sbt-sonarrunner-plugin.svg)
 
+## Installation
 
-Installation
-------------
-
-NOTE this plugin targets sbt 1.1.0+
-=================
+# NOTE this plugin targets sbt 1.1.0+
 
 Add the following to your `project/plugins.sbt` file:
 
 ```scala
-addSbtPlugin("com.aol.sbt" % "sbt-sonarrunner-plugin" % "1.0.4")
+addSbtPlugin("com.aol.sbt" % "sbt-sonarrunner-plugin" % "1.1.0")
 ```
 
 To use the SonarRunner settings in your project, add the `SonarRunnerPlugin` auto-plugin to your project.
@@ -25,9 +22,7 @@ To use the SonarRunner settings in your project, add the `SonarRunnerPlugin` aut
 enablePlugins(SonarRunnerPlugin)
 ```
 
-
-Configuration
--------------
+## Configuration
 
 To use specific Sonar settings, add the following to your `build.sbt` file:
 
@@ -40,8 +35,8 @@ sonarProperties ++= Map(
     )
 ```
 
-
 You can also specify the following sonar-runner options:
+
 ```
 -D,--define <arg>     Define property
 -e,--errors           Produce execution error messages
@@ -52,7 +47,6 @@ You can also specify the following sonar-runner options:
 
 ```scala
 sonarRunnerOptions := Seq("-e", "-X")
-
 ```
 
 Run Sonar
@@ -61,14 +55,14 @@ Run Sonar
     sbt sonar
 ```
 
-Full list of Sonar analysis parameters
---------------------------------------
+## Full list of Sonar analysis parameters
+
 http://docs.sonarqube.org/display/SONAR/Analysis+Parameters
 
-Bintray
---------------------------------------
+## Bintray
+
 https://bintray.com/aol/scala/sbt-sonarrunner-plugin/view
 
-Author
---------------------------------------
+## Author
+
 maestr0 - Pawel Raszewski
